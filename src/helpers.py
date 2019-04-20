@@ -23,3 +23,20 @@ def calculate_apl(G):
                     original_center = nx.center(g)
 
     return add/lol
+
+def plot_graph(G):
+    plt.figure()
+    pos_nodes = nx.spring_layout(G)
+    nx.draw(G, pos_nodes, with_labels=True)
+
+    pos_attrs = {}
+    for node, coords in pos_nodes.items():
+        pos_attrs[node] = (coords[0], coords[1] + 0.08)
+
+    node_attrs = nx.get_node_attributes(G, 'label')
+    custom_node_attrs = {}
+    for node, attr in node_attrs.items():
+        custom_node_attrs[node] = "{'label': '" + attr + "'}"
+
+    nx.draw_networkx_labels(G, pos_attrs, labels=custom_node_attrs)
+    plt.show()
