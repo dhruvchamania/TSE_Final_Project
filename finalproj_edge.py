@@ -67,7 +67,7 @@ targets_present = []
 temp_labels_present = []
 count = 1                                                                  ## Count denotes number of nodes in each equivalence group
 c_var = 3
-print("Hellooooo")
+print("Hello")
 for val in degc:
     if count > k:                                                          ## Adding K-Anonymity
         c = collections.Counter(labels_present)
