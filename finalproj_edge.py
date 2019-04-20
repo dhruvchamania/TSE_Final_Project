@@ -8,6 +8,7 @@ from operator import itemgetter
 from operator import attrgetter
 from matplotlib import pyplot as plt
 import time
+import helpers
 
 def edge_editing(k,l,path):
     
@@ -24,26 +25,7 @@ def edge_editing(k,l,path):
     # noise_centrality_val = []
     # p = 0
     #
-    add = 0
-    lol = 0
-    max_order = 2
-
-    #Checking to see if the graph is connected or not
-    if nx.is_connected(G):
-        add = 1
-        lol = 1
-
-    else:
-        for g in nx.connected_component_subgraphs(G):
-            if g.order() > 2:
-                add = add + nx.average_shortest_path_length(g)
-                lol = lol + 1
-                if g.order() > max_order:
-                    max_order = g.order()
-                    original_center = nx.center(g)
-
-    initial_apl = add/lol
-
+    initial_apl = helpers.calculate_apl(G)
     # original_cc = nx.average_clustering(G)
     # while p < number_runs:
     #G = nx.convert_node_labels_to_integers(H, label_attribute = 'author_name')
@@ -110,18 +92,8 @@ def edge_editing(k,l,path):
     edge_target[0] += 1
     G_new = nx.configuration_model(edge_target)
 
-    add = 0
-    lol = 0
-    max_order = 2
-    for g in nx.connected_component_subgraphs(G_new):
-        if g.order() > 2:
-            add = add + nx.average_shortest_path_length(g)
-            lol = lol + 1
-            if g.order() > max_order:
-                max_order = g.order()
-                original_center = nx.center(g)
     #print add / lol, lol
-    new_apl = add/lol
+    new_apl = helpers.calculate_apl(G_new)
     # for node in G_new.nodes():
         # print (G_new.degree[node])
     print("New apl",new_apl)
