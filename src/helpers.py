@@ -82,3 +82,50 @@ def generate_tds(G,k,l,c_var  =3,alpha = 0.25):
             temp_labels_present.append(G.node[val[0]]['label'])               ## No of distinct labels present in the equivalence group
         count = count + 1
     return G
+
+def generate_tds_onlyk(G,k):
+    degc = {}
+    degc = nx.eigenvector_centrality(G)
+    degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
+    target = G.node[degc[0][0]]['degree']                                      ## For the first time, setting target degree
+    count = 1                                                                  ## Count denotes number of nodes in each equivalence group
+    print("Hello")
+    for val in degc:
+        if count > k:                                                          ## Adding K-Anonymity
+            target = G.node[val[0]]['degree']
+            count = 1
+        G.add_node(val[0], target_degree = target)
+        count = count + 1
+    return G
+
+def centrality_values(G):
+    original_centrality_val = []
+    noise_centrality_val = []
+    res = 0
+    cnt = 0
+    res_original_nodes = 0
+    cnt_original_nodes = 0
+    color_map = []
+    degc = {}
+    degc = nx.katz_centrality_numpy(G)
+    for n in G.nodes():
+        if G.node[n]['target_degree'] == 0 and G.node[n]['degree'] >=1:
+            color_map.append('blue')
+            res = res + degc[n]
+            cnt = cnt + 1
+            #print G.degree(n), G.node[n]['degree'], G.node[n]
+        else:
+            color_map.append('red')
+            res_original_nodes = res_original_nodes + degc[n]
+            cnt_original_nodes = cnt_original_nodes + 1
+
+    original_centrality_val.append(res_original_nodes / cnt_original_nodes)
+    noise_centrality_val.append(res / cnt)
+    # noise_cc = nx.average_clustering(G)
+    l_5 = plt.plot(k_val[0:4], noise_centrality_val[0:4], label = 'l = 5', marker = '*')
+    l_10 = plt.plot(k_val[4:], noise_centrality_val[4:], label = 'l = 10', marker = '+')
+    raw_graph = plt.plot(k_val, original_centrality_val, label = 'Raw Graph')
+    plt.xlabel('Values of K')
+    plt.ylabel('Social Importance')
+    plt.legend()
+    plt.show()
