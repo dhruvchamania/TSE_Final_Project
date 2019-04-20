@@ -3,6 +3,8 @@ import networkx as nx
 import collections
 import random
 import string
+from operator import itemgetter
+from matplotlib import pyplot as plt
 
 def calculate_apl(G):
     add = 0
@@ -40,3 +42,43 @@ def plot_graph(G):
 
     nx.draw_networkx_labels(G, pos_attrs, labels=custom_node_attrs)
     plt.show()
+
+def generate_tds(G,k,l,c_var  =3,alpha = 0.25):
+    k_val = []
+    k_val.append(k)
+    degc = {}
+    degc = nx.eigenvector_centrality(G)
+    degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
+    target = G.node[degc[0][0]]['degree']                                      ## For the first time, setting target degree
+    labels_present = []
+    targets_present = []
+    temp_labels_present = []
+    count = 1                                                                  ## Count denotes number of nodes in each equivalence group
+    print("Hello")
+    for val in degc:
+        if count > k:                                                          ## Adding K-Anonymity
+            c = collections.Counter(labels_present)
+            target_label_count = c.most_common(1)[0][1]                        ## count of the most frequent label
+            #print target_label_count / (count - 1), count                      ## debugging
+            temp_count = 0
+            recursive_sum = 0
+            dict(c)
+            for key,valuee in c.items():                                            ## For recursive c-l diversity
+                if temp_count >= l:
+                    recursive_sum = recursive_sum + valuee
+                    temp_count = temp_count + 1
+                else:
+                    temp_count = temp_count + 1
+            if  target_label_count/(count-1) < alpha and len(temp_labels_present) >= l : #and target_label_count < (c_var*recursive_sum):                           ## Alpha Anonymity condition, count - 1 is used because the count is always 1 ahead of the actual number of nodes
+                target = G.node[val[0]]['degree']
+                count = 1
+                del labels_present[:]
+                del temp_labels_present[:]
+        G.add_node(val[0], target_degree = target)
+        labels_present.append(G.node[val[0]]['label'])                        ## All the labels present in the equivalence group
+        if G.node[val[0]]['target_degree'] not in targets_present:
+            targets_present.append(G.node[val[0]]['target_degree'])
+        if G.node[val[0]]['label'] not in temp_labels_present:
+            temp_labels_present.append(G.node[val[0]]['label'])               ## No of distinct labels present in the equivalence group
+        count = count + 1
+    return G

@@ -10,6 +10,8 @@ from matplotlib import pyplot as plt
 import time
 import helpers
 
+
+
 def edge_editing(k,l,path):
     
     G = nx.read_gml(path)
@@ -18,7 +20,7 @@ def edge_editing(k,l,path):
         G.add_node(node, label = node[0], degree = G.degree[node])
 
     start_time = time.time()
-    k_val = []
+    
     apl_val = []
     raw_apl = []
     # original_centrality_val = []
@@ -44,45 +46,8 @@ def edge_editing(k,l,path):
                                             ## Taking input for K-Anonymity
     #alpha = input("Enter the value of alpha \n")                                   ## Taking input for Alpha
     #cent_measure = raw_input("Enter the centrality measure : \n")
-    alpha = 0.25
     
-    k_val.append(k)
-    degc = {}
-    degc = nx.eigenvector_centrality(G)
-    degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
-    target = G.node[degc[0][0]]['degree']                                      ## For the first time, setting target degree
-    labels_present = []
-    targets_present = []
-    temp_labels_present = []
-    count = 1                                                                  ## Count denotes number of nodes in each equivalence group
-    c_var = 3
-    print("Hello")
-    for val in degc:
-        if count > k:                                                          ## Adding K-Anonymity
-            c = collections.Counter(labels_present)
-            target_label_count = c.most_common(1)[0][1]                        ## count of the most frequent label
-            #print target_label_count / (count - 1), count                      ## debugging
-            temp_count = 0
-            recursive_sum = 0
-            dict(c)
-            for key,valuee in c.items():                                            ## For recursive c-l diversity
-                if temp_count >= l:
-                    recursive_sum = recursive_sum + valuee
-                    temp_count = temp_count + 1
-                else:
-                    temp_count = temp_count + 1
-            if  target_label_count/(count-1) < alpha and len(temp_labels_present) >= l : #and target_label_count < (c_var*recursive_sum):                           ## Alpha Anonymity condition, count - 1 is used because the count is always 1 ahead of the actual number of nodes
-                target = G.node[val[0]]['degree']
-                count = 1
-                del labels_present[:]
-                del temp_labels_present[:]
-        G.add_node(val[0], target_degree = target)
-        labels_present.append(G.node[val[0]]['label'])                        ## All the labels present in the equivalence group
-        if G.node[val[0]]['target_degree'] not in targets_present:
-            targets_present.append(G.node[val[0]]['target_degree'])
-        if G.node[val[0]]['label'] not in temp_labels_present:
-            temp_labels_present.append(G.node[val[0]]['label'])               ## No of distinct labels present in the equivalence group
-        count = count + 1
+    G = helpers.generate_tds(G,k,l,)
     edge_target = []
     for node in G.nodes():
         edge_target.append(G.node[node]['target_degree'])
@@ -110,7 +75,7 @@ G2 = nx.Graph()
 k = int(input("Enter the value of k \n"))   
 l = int(input("Enter the value of l \n"))
 
-G1,G2 = edge_editing(k,l,'netscience.gml')
+G1,G2 = edge_editing(k,l,r'..\data\netscience.gml')
 print(len(G1.nodes), len(G2.nodes))
 print(len(G1.edges), len(G2.edges))
 nx.draw_networkx(G1, with_labels=False)
