@@ -85,7 +85,7 @@ G2 = nx.Graph()
 k = int(input("Enter the value of k \n"))
 l = int(input("Enter the value of l \n"))
 
-G1,G2 = edge_editing(k,l,r'..\data\netscience.gml')
+G1,G2 = edge_editing(k,l,r'..\data\karate.gml')
 print("Number of nodes in original graph: ",len(G1.nodes),"Number of nodes in anonymised graph: ", len(G2.nodes))
 print(len(G1.edges), len(G2.edges))
 # nx.draw_networkx(G1, with_labels=False)

@@ -8,8 +8,9 @@ from operator import itemgetter
 from operator import attrgetter
 from matplotlib import pyplot as plt
 import time
+import helpers
 
-G = nx.read_gml('internet_routers-22july06.gml')
+G = nx.read_gml(r'..\data\karate.gml')
 print ("Hello",G)
 nx.draw_networkx(G)
 plt.show()
@@ -34,10 +35,17 @@ for g in nx.connected_component_subgraphs(G):
             max_order = g.order()
             original_center = nx.center(g)
 #print add / lol, lol
-initial_apl = add/lol
+# initial_apl = add/lol
+if nx.is_connected(G):
+    initial_apl = nx.average_shortest_path_length(G)
+
+print("Initial apl is: ",initial_apl)
+
+helpers.plot_graph(G)
+
 original_cc = nx.average_clustering(G)
 while p < number_runs:
-    G = nx.read_gml('netscience.gml')
+    G = nx.read_gml(r'..\data\karate.gml')
     for node in G.nodes:
         G.add_node(node, label = node[0], degree = G.degree[node])
     #G = nx.convert_node_labels_to_integers(H, label_attribute = 'author_name')
@@ -177,29 +185,31 @@ while p < number_runs:
             noise_node = noise_node + 1
             #print G.node[val]['target_degree'], G.node[val]['degree']
     ## SETTING DEGREE OF NOISE NODES
-        diff = []
-        for n in G.nodes():
-            if G.node[n]['target_degree'] == 0 and G.degree(n) not in targets_present:
-                neig = nx.single_source_shortest_path_length(G,n,cutoff = 3)
-                if G.degree(n) % 2 == 0:
-                    for m in targets_present:
-                        if m % 2 == 0 and m > G.degree(n):
-                            diff.append(m)
-                    for k,v in neigh.items():
-                        if v > 1 and G.degree(k) not in targets_present and G.degree(n) != G.degree(min(diff)):
-                            G.add_edge(n,k)
-                            G.node[n]['degree'] = G.node[n]['degree'] + 1
-                            G.node[k]['degree'] = G.node[k]['degree'] + 1
-                            # print (G.node[n]['degree'], G.degree(n))
-                else:
-                    for m in targets_present:
-                        if m % 2 != 0 and m > G.degree(n):
-                            diff.append(m)
-                    for k,v in neigh.items():
-                        if v > 1 and G.degree(k) not in targets_present and G.degree(n) != G.degree(min(diff)):
-                            G.add_edge(n,k)
-                            G.node[n]['degree'] = G.node[n]['degree'] + 1
-                            G.node[k]['degree'] = G.node[k]['degree'] + 1
+        # diff = []
+        # for n in G.nodes():
+        #     if G.node[n]['target_degree'] == 0 and G.degree(n) not in targets_present:
+        #         neig = nx.single_source_shortest_path_length(G,n,cutoff = 3)
+        #         if G.degree(n) % 2 == 0:
+        #             for m in targets_present:
+        #                 if m % 2 == 0 and m > G.degree(n):
+        #                     diff.append(m)
+        #             for k,v in neigh.items():
+        #                 if m % 2 != 0 and m > G.degree(n):
+        #                     if v > 1 and G.degree(k) not in targets_present and G.degree(n) != G.degree(min(diff)):
+        #                         G.add_edge(n,k)
+        #                         G.node[n]['degree'] = G.node[n]['degree'] + 1
+        #                         G.node[k]['degree'] = G.node[k]['degree'] + 1
+        #                     # print (G.node[n]['degree'], G.degree(n))
+        #         else:
+        #             for m in targets_present:
+        #                 if m % 2 != 0 and m > G.degree(n):
+        #                     diff.append(m)
+        #             for k,v in neigh.items():
+        #                 if len(diff) > 0:
+        #                     if v > 1 and G.degree(k) not in targets_present and G.degree(n) != G.degree(min(diff)):
+        #                         G.add_edge(n,k)
+        #                         G.node[n]['degree'] = G.node[n]['degree'] + 1
+        #                         G.node[k]['degree'] = G.node[k]['degree'] + 1
                             # print (G.node[n]['degree'], G.degree(n))
     #for n in G.nodes():
         #if G.node[n]['degree'] != G.degree(n):
@@ -267,3 +277,5 @@ plt.xlabel('Values of K')
 plt.ylabel('Social Importance')
 plt.legend()
 plt.show()
+
+helpers.plot_graph(G)
