@@ -69,7 +69,7 @@ def generate_tds(G,k,l,c_var  =3,alpha = 0.25):
                     temp_count = temp_count + 1
                 else:
                     temp_count = temp_count + 1
-            if  target_label_count/(count-1) < alpha and len(temp_labels_present) >= l : #and target_label_count < (c_var*recursive_sum):                           ## Alpha Anonymity condition, count - 1 is used because the count is always 1 ahead of the actual number of nodes
+            if  target_label_count/(count-1) < alpha and len(temp_labels_present) >= l and target_label_count < (c_var*recursive_sum):                           ## Alpha Anonymity condition, count - 1 is used because the count is always 1 ahead of the actual number of nodes
                 target = G.node[val[0]]['degree']
                 count = 1
                 del labels_present[:]
@@ -83,7 +83,7 @@ def generate_tds(G,k,l,c_var  =3,alpha = 0.25):
         count = count + 1
     return G
 
-def generate_tds_onlyk(G,k):
+def generate_tds_onlyk(G,k):        #Not Tested
     degc = {}
     degc = nx.eigenvector_centrality(G)
     degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
@@ -97,6 +97,45 @@ def generate_tds_onlyk(G,k):
         G.add_node(val[0], target_degree = target)
         count = count + 1
     return G
+
+def generate_tds_kl(G,k,l):         #Not Tested
+    k_val = []
+    k_val.append(k)
+    degc = {}
+    degc = nx.eigenvector_centrality(G)
+    degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
+    target = G.node[degc[0][0]]['degree']                                      ## For the first time, setting target degree
+    labels_present = []
+    targets_present = []
+    temp_labels_present = []
+    count = 1                                                                  ## Count denotes number of nodes in each equivalence group
+    print("Hello")
+    for val in degc:
+        if count > k:                                                          ## Adding K-Anonymity
+            c = collections.Counter(labels_present)
+            target_label_count = c.most_common(1)[0][1]                        ## count of the most frequent label
+            #print target_label_count / (count - 1), count                      ## debugging
+            temp_count = 0
+            recursive_sum = 0
+            dict(c)
+            if  len(temp_labels_present) >= l:
+                target = G.node[val[0]]['degree']
+                count = 1
+                del labels_present[:]
+                del temp_labels_present[:]
+        G.add_node(val[0], target_degree = target)
+        labels_present.append(G.node[val[0]]['label'])                        ## All the labels present in the equivalence group
+        if G.node[val[0]]['target_degree'] not in targets_present:
+            targets_present.append(G.node[val[0]]['target_degree'])
+        if G.node[val[0]]['label'] not in temp_labels_present:
+            temp_labels_present.append(G.node[val[0]]['label'])               ## No of distinct labels present in the equivalence group
+        count = count + 1
+    return G
+
+def centrality_top_20(G):
+    degc = nx.degree_centrality(G)
+    degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
+    return degc[:20]
 
 def centrality_values(G):
     original_centrality_val = []
