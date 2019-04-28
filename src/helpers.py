@@ -5,7 +5,11 @@ import random
 import string
 from operator import itemgetter
 from matplotlib import pyplot as plt
+import time
+import os
+import psutil
 
+mem = []
 def calculate_apl(G):
     add = 0
     lol = 0
@@ -22,9 +26,31 @@ def calculate_apl(G):
                 lol = lol + 1
                 if g.order() > max_order:
                     max_order = g.order()
-                    original_center = nx.center(g)
 
     return add/lol
+
+def centralitity(G,i):
+
+    degc = {}
+    
+    if i == 1:
+        print("Making use of eigenvector centrality")
+        degc = nx.eigenvector_centrality(G)
+    elif i == 2:
+        print("Making use of closeness centrality")
+        degc = nx.closeness_centrality(G)
+    elif i == 3:
+        print("Making use of betweenness centrality")
+        degc = nx.betweenness_centrality(G)
+    elif i == 4:
+        print("Making use of degree centrality")
+        degc = nx.degree_centrality(G)
+    else:
+        print("Making use of katz centrality")
+        degc = nx.katz_centrality(G)
+
+    return degc
+
 
 def plot_graph(G):
     plt.figure()
@@ -43,11 +69,31 @@ def plot_graph(G):
     nx.draw_networkx_labels(G, pos_attrs, labels=custom_node_attrs)
     plt.show()
 
-def generate_tds(G,k,l,c_var  =3,alpha = 0.25):
+def get_mem():
+    return mem
+    
+def elapsed_since(start):
+    return time.strftime("%H:%M:%S", time.gmtime(time.time() - start))
+
+def get_process_memory():
+    process = psutil.Process(os.getpid())
+    return process.memory_info().rss
+
+def profile(func):
+    def wrapper(*args, **kwargs):
+        mem_before = get_process_memory()
+        result = func(*args, **kwargs)
+        mem_after = get_process_memory()
+        mem.append(mem_after - mem_before)
+        return result
+    return wrapper
+def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
+
+    print("Using all for privacy measures")
     k_val = []
     k_val.append(k)
     degc = {}
-    degc = nx.eigenvector_centrality(G)
+    degc = centralitity(G,i)
     degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
     target = G.node[degc[0][0]]['degree']                                      ## For the first time, setting target degree
     labels_present = []
@@ -64,9 +110,10 @@ def generate_tds(G,k,l,c_var  =3,alpha = 0.25):
             recursive_sum = 0
             dict(c)
             for key,valuee in c.items():                                            ## For recursive c-l diversity
+                key = 0
                 if temp_count >= l:
                     recursive_sum = recursive_sum + valuee
-                    temp_count = temp_count + 1
+                    temp_count = temp_count + key + 1
                 else:
                     temp_count = temp_count + 1
             if  target_label_count/(count-1) < alpha and len(temp_labels_present) >= l and target_label_count < (c_var*recursive_sum):                           ## Alpha Anonymity condition, count - 1 is used because the count is always 1 ahead of the actual number of nodes
@@ -83,9 +130,11 @@ def generate_tds(G,k,l,c_var  =3,alpha = 0.25):
         count = count + 1
     return G
 
-def generate_tds_onlyk(G,k):        #Not Tested
+def generate_tds_onlyk(G,k,i):        #Not Tested
+    print("Using only k privacy measures")
     degc = {}
-    degc = nx.eigenvector_centrality(G)
+    print(i)
+    degc = centralitity(G,i)
     degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
     target = G.node[degc[0][0]]['degree']                                      ## For the first time, setting target degree
     count = 1                                                                  ## Count denotes number of nodes in each equivalence group
@@ -98,11 +147,12 @@ def generate_tds_onlyk(G,k):        #Not Tested
         count = count + 1
     return G
 
-def generate_tds_kl(G,k,l):         #Not Tested
+def generate_tds_kl(G,k,l,i):         #Not Tested
+    print("Using k,l privacy measures")
     k_val = []
     k_val.append(k)
     degc = {}
-    degc = nx.eigenvector_centrality(G)
+    degc = centralitity(G,i)
     degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
     target = G.node[degc[0][0]]['degree']                                      ## For the first time, setting target degree
     labels_present = []
@@ -113,10 +163,9 @@ def generate_tds_kl(G,k,l):         #Not Tested
     for val in degc:
         if count > k:                                                          ## Adding K-Anonymity
             c = collections.Counter(labels_present)
-            target_label_count = c.most_common(1)[0][1]                        ## count of the most frequent label
-            #print target_label_count / (count - 1), count                      ## debugging
-            temp_count = 0
-            recursive_sum = 0
+            #Debugging
+            #target_label_count = c.most_common(1)[0][1]                        ## count of the most frequent label
+            #print target_label_count / (count - 1), count                 
             dict(c)
             if  len(temp_labels_present) >= l:
                 target = G.node[val[0]]['degree']
@@ -160,11 +209,8 @@ def centrality_values(G):
 
     original_centrality_val.append(res_original_nodes / cnt_original_nodes)
     noise_centrality_val.append(res / cnt)
-    # noise_cc = nx.average_clustering(G)
-    l_5 = plt.plot(k_val[0:4], noise_centrality_val[0:4], label = 'l = 5', marker = '*')
-    l_10 = plt.plot(k_val[4:], noise_centrality_val[4:], label = 'l = 10', marker = '+')
-    raw_graph = plt.plot(k_val, original_centrality_val, label = 'Raw Graph')
     plt.xlabel('Values of K')
     plt.ylabel('Social Importance')
     plt.legend()
     plt.show()
+

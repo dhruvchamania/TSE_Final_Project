@@ -8,7 +8,7 @@ from operator import itemgetter
 from operator import attrgetter
 from matplotlib import pyplot as plt
 import time
-import helpers
+from src import helpers
 
 G = nx.read_gml(r'..\data\karate.gml')
 print ("Hello",G)
