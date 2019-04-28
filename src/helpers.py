@@ -214,3 +214,82 @@ def centrality_values(G):
     plt.legend()
     plt.show()
 
+def plot_graph2(G1,G2, Title="Default Title"):
+
+    fig = plt.figure(figsize=(40,40))
+    fig.suptitle(Title, fontsize=20, fontweight='bold')
+
+    ax1 = fig.add_subplot(121)
+    ax1.set_title("Original Graph")
+
+    pos_nodes = nx.spring_layout(G1)
+    nx.draw(G1, pos_nodes, with_labels=True)
+
+    pos_attrs = {}
+    for node, coords in pos_nodes.items():
+        pos_attrs[node] = (coords[0], coords[1] + 0.08)
+
+    node_attrs = nx.get_node_attributes(G1, 'label')
+    custom_node_attrs = {}
+    for node, attr in node_attrs.items():
+        custom_node_attrs[node] = "{'label': '" + attr + "'}"
+
+    nx.draw_networkx_labels(G1, pos_attrs, labels=custom_node_attrs, ax=ax1)
+
+
+    ###########
+
+    ax2 = fig.add_subplot(122)
+    ax2.set_title("Modified Graph")
+
+    pos_nodes = nx.spring_layout(G2)
+    nx.draw(G2, pos_nodes, with_labels=True)
+
+    pos_attrs = {}
+    for node, coords in pos_nodes.items():
+        pos_attrs[node] = (coords[0], coords[1] + 0.08)
+
+    node_attrs = nx.get_node_attributes(G2, 'label')
+    custom_node_attrs = {}
+    for node, attr in node_attrs.items():
+        custom_node_attrs[node] = "{'label': '" + attr + "'}"
+
+    nx.draw_networkx_labels(G2, pos_attrs, labels=custom_node_attrs, ax=ax2)
+
+    plt.show()
+
+def plot_graph_summary(G1,Gs, Titles=[]):
+
+    fig = plt.figure(figsize=(40,40))
+    fig.suptitle("SUMMARY", fontsize=15, fontweight='bold')
+
+    for i in range(15):
+        row = i//5
+        col = i%5
+
+        if Titles:
+            title=Titles.pop(0)
+        else:
+            title="Default Title"
+
+        ax = plt.subplot2grid((3,5),(row,col))
+
+        ax.set_title(title)
+
+        g = Gs[i]
+
+        pos_nodes = nx.spring_layout(g)
+        nx.draw(g, pos_nodes, with_labels=True)
+
+        pos_attrs = {}
+        for node, coords in pos_nodes.items():
+            pos_attrs[node] = (coords[0], coords[1] + 0.08)
+
+        node_attrs = nx.get_node_attributes(g, 'label')
+        custom_node_attrs = {}
+        for node, attr in node_attrs.items():
+            custom_node_attrs[node] = "{'label': '" + attr + "'}"
+
+        nx.draw_networkx_labels(g, pos_attrs, labels=custom_node_attrs, ax=ax)
+
+    plt.show()
