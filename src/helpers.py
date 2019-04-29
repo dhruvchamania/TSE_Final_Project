@@ -34,20 +34,20 @@ def centralitity(G,i):
     degc = {}
     
     if i == 1:
-        print("Making use of eigenvector centrality")
+        #print("Making use of eigenvector centrality")
         degc = nx.eigenvector_centrality(G)
     elif i == 2:
-        print("Making use of closeness centrality")
+        #print("Making use of closeness centrality")
         degc = nx.closeness_centrality(G)
     elif i == 3:
-        print("Making use of betweenness centrality")
+        #print("Making use of betweenness centrality")
         degc = nx.betweenness_centrality(G)
     elif i == 4:
-        print("Making use of degree centrality")
+        #print("Making use of degree centrality")
         degc = nx.degree_centrality(G)
     else:
-        print("Making use of katz centrality")
-        degc = nx.katz_centrality(G)
+        #print("Making use of katz centrality")
+        degc = nx.katz_centrality_numpy(G)
 
     return degc
 
@@ -71,7 +71,14 @@ def plot_graph(G):
 
 def get_mem():
     return mem
-    
+
+def get_title(i,j):
+
+    I = ['Only k','K & l', 'All ']
+    J = ['Eigen','closeness','betweeness','degree','katz']
+    s = 'Using ' + I[i] + ' and ' + J[j] + ' centrality'
+    return s
+
 def elapsed_since(start):
     return time.strftime("%H:%M:%S", time.gmtime(time.time() - start))
 
@@ -89,7 +96,7 @@ def profile(func):
     return wrapper
 def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
 
-    print("Using all for privacy measures")
+    #print("Using all for privacy measures")
     k_val = []
     k_val.append(k)
     degc = {}
@@ -100,12 +107,14 @@ def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
     targets_present = []
     temp_labels_present = []
     count = 1                                                                  ## Count denotes number of nodes in each equivalence group
-    print("Hello")
+    #Debugging
+    # print("Hello")
     for val in degc:
         if count > k:                                                          ## Adding K-Anonymity
             c = collections.Counter(labels_present)
             target_label_count = c.most_common(1)[0][1]                        ## count of the most frequent label
-            #print target_label_count / (count - 1), count                      ## debugging
+            #Debugging
+            # print target_label_count / (count - 1), count                      ## debugging
             temp_count = 0
             recursive_sum = 0
             dict(c)
@@ -131,14 +140,16 @@ def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
     return G
 
 def generate_tds_onlyk(G,k,i):        #Not Tested
-    print("Using only k privacy measures")
+    #print("Using only k privacy measures")
     degc = {}
-    print(i)
+    #Debugging
+    # print(i)
     degc = centralitity(G,i)
     degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
     target = G.node[degc[0][0]]['degree']                                      ## For the first time, setting target degree
     count = 1                                                                  ## Count denotes number of nodes in each equivalence group
-    print("Hello")
+    #Debugging
+    # print("Hello")
     for val in degc:
         if count > k:                                                          ## Adding K-Anonymity
             target = G.node[val[0]]['degree']
@@ -148,7 +159,7 @@ def generate_tds_onlyk(G,k,i):        #Not Tested
     return G
 
 def generate_tds_kl(G,k,l,i):         #Not Tested
-    print("Using k,l privacy measures")
+    #print("Using k,l privacy measures")
     k_val = []
     k_val.append(k)
     degc = {}
@@ -159,7 +170,8 @@ def generate_tds_kl(G,k,l,i):         #Not Tested
     targets_present = []
     temp_labels_present = []
     count = 1                                                                  ## Count denotes number of nodes in each equivalence group
-    print("Hello")
+    #Debugging
+    # print("Hello")
     for val in degc:
         if count > k:                                                          ## Adding K-Anonymity
             c = collections.Counter(labels_present)
@@ -186,6 +198,31 @@ def centrality_top_20(G):
     degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
     return degc[:20]
 
+def centrality_top_20_compare(G_old,G_new):
+    old,new = [],[]
+    I = 0
+    for node in G_old.nodes:
+        G_old.add_node(node, id = I,label = node[0])
+        I += 1
+
+    I = 0
+    for node in G_new.nodes:
+        G_new.add_node(node, id = I)
+        I += 1
+    #Debugging
+    # print("Hello")
+    for i in centrality_top_20(G_old):
+        old.append(G_old.node[i[0]]['id'])
+    for i in centrality_top_20(G_new):
+        print(i)
+        new.append(G_new.node[i[0]]['id'])
+        # new.append(i[0])
+    #Debugging
+    #print(old,new)
+    old,new = set(old),set(new)
+    res = old.intersection(new)
+    return len(res)
+
 def centrality_values(G):
     original_centrality_val = []
     noise_centrality_val = []
@@ -201,7 +238,8 @@ def centrality_values(G):
             color_map.append('blue')
             res = res + degc[n]
             cnt = cnt + 1
-            #print G.degree(n), G.node[n]['degree'], G.node[n]
+            #Debugging
+            # print G.degree(n), G.node[n]['degree'], G.node[n]
         else:
             color_map.append('red')
             res_original_nodes = res_original_nodes + degc[n]
@@ -231,10 +269,11 @@ def plot_graph2(G1,G2, Title="Default Title"):
 
     node_attrs = nx.get_node_attributes(G1, 'label')
     custom_node_attrs = {}
+    print(len(node_attrs))
     for node, attr in node_attrs.items():
         custom_node_attrs[node] = "{'label': '" + attr + "'}"
 
-    nx.draw_networkx_labels(G1, pos_attrs, labels=custom_node_attrs, ax=ax1)
+    nx.draw_networkx_labels(G1, pos_attrs, labels=custom_node_attrs, ax=ax1, with_labels = True)
 
 
     ###########
@@ -274,7 +313,7 @@ def plot_graph_summary(G1,Gs, Titles=[]):
 
         ax = plt.subplot2grid((3,5),(row,col))
 
-        ax.set_title(title)
+        ax.set_title(title, fontsize=10)
 
         g = Gs[i]
 
