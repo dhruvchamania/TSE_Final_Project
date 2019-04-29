@@ -1,0 +1,4 @@
+	(Name)	(Time Taken in sec)	(Memory Consumed in MB)	(Node difference)	(Top 20 Centrality)
+0	Using Only k and Eigen centrality	1.7624588012695312	97.29296875	821	15
+1	Using Only k and closeness centrality	1.9130914211273193	90.109375	1883	14
+2	Using Only k and betweeness centrality	12.133760929107666	192.35546875	211694	14
