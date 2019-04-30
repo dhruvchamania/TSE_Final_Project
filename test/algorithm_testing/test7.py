@@ -78,4 +78,3 @@ for i in rank:
     print(i[0])
 Frame.to_csv('test7.csv',sep='\t')
 
-helpers.plot_graph(G2)

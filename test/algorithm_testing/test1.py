@@ -82,9 +82,8 @@ for i in rank:
 Frame.to_csv('test1.csv',sep='\t')
 
 
-for i, graph in enumerate(g):
-        helpers.plot_graph2(G1,graph,title[i])
-
-
-
+#for i, graph in enumerate(g):
+#       helpers.plot_graph2(G1,graph,title[i])
+for i in range(0,1):
+        helpers.plot_graph2(G1,g[i],title[i])
 helpers.plot_graph_summary(G1,g,title)
