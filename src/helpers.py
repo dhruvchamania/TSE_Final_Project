@@ -214,7 +214,7 @@ def centrality_top_20_compare(G_old,G_new):
     for i in centrality_top_20(G_old):
         old.append(G_old.node[i[0]]['id'])
     for i in centrality_top_20(G_new):
-        print(i)
+        #print(i)
         new.append(G_new.node[i[0]]['id'])
         # new.append(i[0])
     #Debugging
@@ -269,7 +269,7 @@ def plot_graph2(G1,G2, Title="Default Title"):
 
     node_attrs = nx.get_node_attributes(G1, 'label')
     custom_node_attrs = {}
-    print(len(node_attrs))
+    #print(len(node_attrs))
     for node, attr in node_attrs.items():
         custom_node_attrs[node] = "{'label': '" + attr + "'}"
 
@@ -299,7 +299,7 @@ def plot_graph2(G1,G2, Title="Default Title"):
 
 def plot_graph_summary(G1,Gs, Titles=[]):
 
-    fig = plt.figure(figsize=(40,40))
+    fig = plt.figure(figsize=(50,50))
     fig.suptitle("SUMMARY", fontsize=15, fontweight='bold')
 
     for i in range(15):

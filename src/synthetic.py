@@ -1,9 +1,6 @@
 import networkx as nx
 from matplotlib import pyplot as plt
 
-
-
-
 graph=[]
 G=nx.Graph()
 
@@ -56,4 +53,3 @@ def plot_graph(G):
 #G = nx.read_gml('netscience.gml')
 plot_graph(G)
 nx.write_gml(G, "temp.gml")
-
