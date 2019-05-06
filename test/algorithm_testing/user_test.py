@@ -22,6 +22,7 @@ if i == 1:
 
     print("Build a graph\n\n")
     print("Add nodes in the following format: node_number label:")
+    print("Enter minimum 10 number of nodes and edges for graph")
     n = str(input("Enter node : "))
 
     while n!='':
@@ -46,7 +47,7 @@ if i == 1:
     path = r'..\..\data\temp.gml'
 
 else:
-    j = int(input("Enter the dataset you want to test on, 1: Karate(40 approx nodes), 2: netscience(100 approx nodes), 3: Internet(20000 nodes)\n"))
+    j = int(input("Enter the dataset you want to test on, 1: Karate(40 approx nodes), 2: netscience(1400 approx nodes), 3: netscience2(1500 nodes)\n"))
     if j == 1:
         path = r'..\..\data\karate.gml'
     elif j == 2:
@@ -54,7 +55,9 @@ else:
     elif j == 3:
         path = r'..\..\data\as-22july06.gml'
     else:
-        print("Please Enter correct value")
+        print("Using default karate")
+        path = r'..\..\data\karate.gml'
+
 
 k = int(input("Enter the centrality you want test for, 1 for eigen, 2 for closness, 3 for betweeness, 4 for degree, 5 for katz\n"))
 l = int(input("Enter the type of privacy measure you want to test on 1 for  \n"))
