@@ -8,12 +8,20 @@ from operator import itemgetter
 from operator import attrgetter
 from matplotlib import pyplot as plt
 import time
-from src import helpers
+import helpers
 
 G = nx.read_gml(r'..\data\karate.gml')
 print ("Hello",G)
-nx.draw_networkx(G)
-plt.show()
+x1 = nx.eigenvector_centrality(G)
+x2 = nx.closeness_centrality(G)
+x3 = nx.betweenness_centrality(G)
+x4 = nx.degree_centrality(G)
+x5 = nx.katz_centrality(G)
+print(len(x1)," ",len(x2)," ",len(x3)," ",len(x4)," ",len(x5))
+print(x1,x2,x3,x4,x5)
+
+#nx.draw_networkx(G)
+#plt.show()
 start = time.time()
 k_val = []
 apl_val = []
