@@ -1,9 +1,9 @@
 # Anonimization On Social Netwroks
 
-SRC: the src Code
+SRC: The source code of the data.
 Data: the Data set that we are using
 Test:
-  Bug: Testing for Bugs during over software development
-  Alorgorithm: Testing for code
+  Algorithm: Main test folder. all the code is run through here
+  
 Ouput:
   Output for tests
