@@ -1,4 +1,16 @@
-	(Name)	(Time Taken in sec)	(Memory Consumed in MB)	(Node difference)	(Top 20 Centrality)
-0	Using Only k and Eigen centrality	1.7624588012695312	97.29296875	821	15
-1	Using Only k and closeness centrality	1.9130914211273193	90.109375	1883	14
-2	Using Only k and betweeness centrality	12.133760929107666	192.35546875	211694	14
+,(Name),(Time Taken in sec),(Memory Consumed in MB),(Error in path length),(Edge difference),(Top 20 Centrality)
+0,Using Only k and Eigen centrality,6.716187477111816,8.2421875,114.33087262171348,51,15
+1,Using Only k and closeness centrality,6.7797863483428955,4.98828125,116.77290601215995,37,9
+2,Using Only k and betweeness centrality,7.561769247055054,3.94921875,125.91712271054085,26,9
+3,Using Only k and degree centrality,6.559709072113037,3.46484375,303.3677065361304,42,16
+4,Using Only k and katz centrality,6.713890075683594,7.1171875,162.08149256322898,11,15
+5,Using K & l and Eigen centrality,6.490274429321289,3.203125,112.41374275916611,14,14
+6,Using K & l and closeness centrality,6.886257171630859,3.63671875,310.94294251603503,40,10
+7,Using K & l and betweeness centrality,7.598057746887207,2.75,146.27852737040544,125,4
+8,Using K & l and degree centrality,6.460326910018921,4.1640625,116.46901396548166,47,16
+9,Using K & l and katz centrality,6.3763275146484375,3.3671875,68.51479796575083,32,12
+10,Using All  and Eigen centrality,6.746936798095703,3.21484375,150.38376638281682,124,17
+11,Using All  and closeness centrality,7.040196895599365,3.34765625,98.09565070900081,296,2
+12,Using All  and betweeness centrality,7.7002198696136475,2.93359375,339.7143703920058,107,4
+13,Using All  and degree centrality,7.16243052482605,3.46875,118.33588511981712,93,19
+14,Using All  and katz centrality,6.028474807739258,2.54296875,168.69827232665736,242,1

@@ -1,0 +1,4 @@
+,(Name),(Time Taken in sec),(Memory Consumed in MB),(Edge difference),(Top 20 Centrality)
+0,Using Only k and Eigen centrality,8.994971513748169,99.1328125,821,15
+1,Using Only k and closeness centrality,9.187782526016235,91.69921875,1883,14
+2,Using Only k and betweeness centrality,20.178117036819458,193.87890625,211694,14
