@@ -4,12 +4,13 @@ This repository is the codebase for a anonimzation tool that we have created. A 
 ## Codebase structure
 
 * [data](data): The 4 primary datasets used for testing. All the data for this project is in gml format. Any changes you need to make to this repository should contain these changes.
-  * [misc](misc) Other datasets for which the code base works
+  * [misc](data/misc) Other datasets for which the code base works
 * [docs](docs): Required documentation for the codebase. Important files here are the Complete_Summary.csv that consists of all the data and plots and Final Report.
-* [src](src): The 4 primary datasets used for testing  
-  * [algorithm_testing](algorithm_testing): Folder to run all the tests from. It consists of some default that we made use of for testing that a user can run (and change). It also consists user_test.py file which when executed a user can try out their own graph
-  * [output_images](output_images) Some important output images from test cases.
+* [src](src): The 4 primary datasets used for testing 
 * [test](test) Test cases and their outputs
+  * [algorithm_testing](test/algorithm_testing): Folder to run all the tests from. It consists of some default that we made use of for testing that a user can run (and change). It also consists user_test.py file which when executed a user can try out their own graph
+  * [outputs_images](test/ouputs_images) Some important output images from test cases.
+
 
 ## Software Requirements
 The project requries python3. We suggest use of Anaconda https://www.anaconda.com/.  
