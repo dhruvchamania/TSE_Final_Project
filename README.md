@@ -1,5 +1,5 @@
-# Anonimization On Social Netwroks
-This repository is the codebase for a anonimzation tool that we have created. A prospective user can use this for testing anonimzation for social networks using different methods, privacy measures, centralities etc. A prospective user can also this code base to anonimze social networks with multiple labels.
+# Anonymization Of Social Netwroks
+This repository is the codebase for an anonymzation tool that we have created. A prospective user can use this for implementing anonymization for social networks using different methods, privacy measures, centralities etc. A prospective user can also use this code base to anonymize social networks with multiple sensitive labels.
 
 ## Codebase structure
 
