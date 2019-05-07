@@ -27,7 +27,7 @@ Outside of the base libraries that Anaconda uses, these are the important extern
 ## To develop the anonimzation tool on your own machine
 1. Clone the project:
 ```
-
+git clone https://github.com/dhruvchamania/TSE_Final_Project.git
 ```
 2. Go to the algorithm_testing folder:
 ### All the code run in this folder.
