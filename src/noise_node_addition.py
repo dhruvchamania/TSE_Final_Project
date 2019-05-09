@@ -1,3 +1,6 @@
+## Anonymizes the input graph using the Noise Node Addition technique. We use the helpers function to generate the target degree
+## sequence depending on the privacy measure chosen. This target degree sequence is implemented using the Noise Node Addition algorithm.
+
 from __future__ import division
 import networkx as nx
 import collections
@@ -19,9 +22,13 @@ def noise_node_addition(k,l,n,I,cond,path):
         G.add_node(node, label = node[0], degree = G.degree[node], id = i)
         i += 1
     start_time = time.time()
+    
+    #Calculating the Average Path Length of the original graph
     initial_apl = 1
     if cond == 1:
         initial_apl = helpers.calculate_apl(G)
+        
+    #Generating the target degree sequence
     if n == 1:
         G = helpers.generate_tds_onlyk(G,k,I)
     elif n == 2:
