@@ -10,6 +10,9 @@ import os
 import psutil
 
 mem = []
+
+#Calculate the Average Path Length of both connected and disconnected graphs
+
 def calculate_apl(G):
     add = 0
     lol = 0
@@ -29,6 +32,7 @@ def calculate_apl(G):
 
     return add/lol
 
+# Returns the centrality values of the nodes in the graph depending on the type of centrality chosen.
 def centralitity(G,i):
 
     degc = {}
@@ -51,6 +55,7 @@ def centralitity(G,i):
 
     return degc
 
+## Plotting the graph with the labels
 
 def plot_graph(G):
     plt.figure()
@@ -94,6 +99,8 @@ def profile(func):
         mem.append(mem_after - mem_before)
         return result
     return wrapper
+
+# Generates the target degree sequence for given values of hyperparameters using all available privacy measures
 def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
 
     #print("Using all for privacy measures")
@@ -139,7 +146,9 @@ def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
         count = count + 1
     return G
 
-def generate_tds_onlyk(G,k,i):        #Not Tested
+# Generates the target degree sequence for given values of hyperparameters using only K-degree anonymity privacy measure
+
+def generate_tds_onlyk(G,k,i):        
     #print("Using only k privacy measures")
     degc = {}
     #Debugging
@@ -158,7 +167,9 @@ def generate_tds_onlyk(G,k,i):        #Not Tested
         count = count + 1
     return G
 
-def generate_tds_kl(G,k,l,i):         #Not Tested
+## Generates the target degree sequence for given values of hyperparameters using K-degree anonymity and L-diversity privacy measures
+
+def generate_tds_kl(G,k,l,i):       
     #print("Using k,l privacy measures")
     k_val = []
     k_val.append(k)
@@ -193,10 +204,14 @@ def generate_tds_kl(G,k,l,i):         #Not Tested
         count = count + 1
     return G
 
+# Returns the top 20 nodes in the graph with the best centrality values 
+
 def centrality_top_20(G):
     degc = nx.degree_centrality(G)
     degc = sorted(degc.items(), key = itemgetter(1), reverse = True)
     return degc[:20]
+
+#Returns the number of nodes which remain in the best 20 centrality valued nodes after anonymisation
 
 def centrality_top_20_compare(G_old,G_new):
     old,new = [],[]
