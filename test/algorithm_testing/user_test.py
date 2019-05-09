@@ -78,7 +78,7 @@ if i == 1:
             n = str(input("Enter the next edge : "))
 
     nx.write_gml(G, "temp.gml")
-    path = r'..\..\data\temp.gml'
+    path = r'temp.gml'
     print("Graph created!! ")
     print("Path: "+path)
 
@@ -124,9 +124,10 @@ while not check:
     except:
         k=10
 
-#k = int(input("Enter the centrality you want test for, 1 for eigen, 2 for closness, 3 for betweeness, 4 for degree, 5 for katz\n"))
-l = int(input("Enter the type of privacy measure you want to test on 1 for  \n"))
-
+#k = int(input("Enter the centrality you want test for, 1 for eigen, 2 for closness, 3 for betweeness, 4 for degree, 5 for katz.\n"))
+l = int(input("Enter the type of privacy measure you want to test on 1 for only k, 2 for k&l and 3 for all the privacy measure. Default is only k\n"))
+if l is not 1 or l is not 2 or l is not 3:
+	l = 1
 check = False
 try:
     K = int(input("\nEnter the value of k\n"))
