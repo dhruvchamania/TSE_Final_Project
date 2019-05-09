@@ -1,3 +1,7 @@
+## Aim of this script is to return an anonymised graph after performing Edge Editing. Essentially, this script uses the helpers
+## function to obtain the target degree sequence. After this, we add random edges to fulfill this target degree sequence.
+
+
 from __future__ import division
 import networkx as nx
 import collections
@@ -34,7 +38,7 @@ def edge_editing(k,l,n,I,cond,path):
     # print(2)
     start_time = time.time()
     initial_apl = 1
-    if cond == 1:
+    if cond == 1:                                  ## Calculating Average Path Length of the original graph.
         #Debugging
         #print(1)
         initial_apl = helpers.calculate_apl(G)
@@ -60,6 +64,7 @@ def edge_editing(k,l,n,I,cond,path):
     #alpha = input("Enter the value of alpha \n")                                   ## Taking input for Alpha
     #cent_measure = raw_input("Enter the centrality measure : \n")
     '''
+    ## Generating the target degree sequence
     if n == 1:
         G = helpers.generate_tds_onlyk(G,k,I)
     elif n == 2:
