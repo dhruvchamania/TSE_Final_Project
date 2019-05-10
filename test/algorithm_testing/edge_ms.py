@@ -1,5 +1,4 @@
-# Noise Node for karate.gml dataset
-# Dataset for least amount of nodes.
+# Testing for multiple labelled dataset using edge editing technique.
 
 import sys
 sys.path.append(r"..\..")
@@ -31,7 +30,7 @@ for i in range(0,3):
         mp[helpers_ms.get_title(i,j)].append(Y)
         mp[helpers_ms.get_title(i,j)].append(E)
         mp[helpers_ms.get_title(i,j)].append(abs(len(G2.edges) - len(G1.edges)))
-        mp[helpers_ms.get_title(i,j)].append(helpers_ms.centrality_top_20_compare(G1,G2))         
+        mp[helpers_ms.get_title(i,j)].append(helpers_ms.centrality_top_20_compare(G1,G2))
 
 sorted_time = sorted(mp.items(), key = lambda x: x[1][1])
 time = {}

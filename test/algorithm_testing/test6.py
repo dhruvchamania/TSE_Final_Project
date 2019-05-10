@@ -1,5 +1,5 @@
-# Noise Node for karate.gml dataset
-# Dataset for least amount of nodes.
+# Noise Node for netscience.gml dataset
+# Dataset for medium-large amount of nodes.
 
 import sys
 sys.path.append(r"..\..")
@@ -31,7 +31,7 @@ for i in range(0,3):
         mp[helpers.get_title(i,j)].append(Y)
         mp[helpers.get_title(i,j)].append(E)
         mp[helpers.get_title(i,j)].append(len(G2.nodes) - len(G1.nodes))
-        mp[helpers.get_title(i,j)].append(helpers.centrality_top_20_compare(G1,G2))         
+        mp[helpers.get_title(i,j)].append(helpers.centrality_top_20_compare(G1,G2))
 
 sorted_time = sorted(mp.items(), key = lambda x: x[1][1])
 time = {}
