@@ -354,7 +354,7 @@ def plot_graph2(G1,G2, Title="Default Title"):
     custom_node_attrs = {}
     for node, attr in node_attrs.items():
         #print(attr)
-        custom_node_attrs[node] = "{label: " + attr[0] + ","+attr[1]+"}"
+        custom_node_attrs[node] = "{label: " + attr[0]  +","+attr[0]+ "}"
 
     nx.draw_networkx_labels(G2, pos_attrs, labels=custom_node_attrs, ax=ax2)
 
