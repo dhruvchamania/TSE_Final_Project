@@ -14,6 +14,11 @@ mem = []
 #Calculate the Average Path Length of both connected and disconnected graphs
 
 def calculate_apl(G):
+    """
+
+    :param G: The networkx graph
+    :return: Calculated apl
+    """
     add = 0
     lol = 0
     max_order = 2
@@ -34,7 +39,12 @@ def calculate_apl(G):
 
 # Returns the centrality values of the nodes in the graph depending on the type of centrality chosen.
 def centralitity(G,i):
+    """
 
+    :param G: The networkx graph
+    :param i: Which centrality
+    :return: the dictory with vertices
+    """
     degc = {}
     
     if i == 1:
@@ -58,6 +68,10 @@ def centralitity(G,i):
 ## Plotting the graph with the labels
 
 def plot_graph(G):
+    """
+    :param G: The networkx graph to plot
+    :return: The plotted graph
+    """
     plt.figure()
     pos_nodes = nx.spring_layout(G)
     nx.draw(G, pos_nodes, with_labels=True)
@@ -102,6 +116,16 @@ def profile(func):
 
 # Generates the target degree sequence for given values of hyperparameters using all available privacy measures
 def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
+    """
+
+    :param G: Networkx Graph
+    :param k: The value of k degree anonimity
+    :param l: The value of l diversity
+    :param i: The value of centrality
+    :param c_var: value of c in recursive cl diversity
+    :param alpha: value of alpha anonimity
+    :return: Networkx Graph
+    """
 
     #print("Using all for privacy measures")
     k_val = []
@@ -148,7 +172,14 @@ def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
 
 # Generates the target degree sequence for given values of hyperparameters using only K-degree anonymity privacy measure
 
-def generate_tds_onlyk(G,k,i):        
+def generate_tds_onlyk(G,k,i):
+    """
+
+    :param G: Networkx Graph
+    :param k: The value of k degree anonimity
+    :param i: The centrality
+    :return: Networkx Graph
+    """
     #print("Using only k privacy measures")
     degc = {}
     #Debugging
@@ -169,7 +200,15 @@ def generate_tds_onlyk(G,k,i):
 
 ## Generates the target degree sequence for given values of hyperparameters using K-degree anonymity and L-diversity privacy measures
 
-def generate_tds_kl(G,k,l,i):       
+def generate_tds_kl(G,k,l,i):
+    """
+
+    :param G: Networkx Graph
+    :param k: The value of k degree anonimity
+    :param l: The value of l diversity
+    :param i: The value of centrality
+    :return: Networkx Graph
+    """
     #print("Using k,l privacy measures")
     k_val = []
     k_val.append(k)
@@ -214,6 +253,12 @@ def centrality_top_20(G):
 #Returns the number of nodes which remain in the best 20 centrality valued nodes after anonymisation
 
 def centrality_top_20_compare(G_old,G_new):
+    """
+
+    :param G_old: The old graph
+    :param G_new: The new graph
+    :return: The count of the top 20 same values
+    """
     old,new = [],[]
     I = 0
     for node in G_old.nodes:
@@ -239,6 +284,11 @@ def centrality_top_20_compare(G_old,G_new):
     return len(res)
 
 def centrality_values(G):
+    """
+
+    :param G: Networkx Graph
+    :return: Plotted Graph
+    """
     original_centrality_val = []
     noise_centrality_val = []
     res = 0
@@ -268,6 +318,13 @@ def centrality_values(G):
     plt.show()
 
 def plot_graph2(G1,G2, Title="Default Title"):
+    """
+
+    :param G1: The old networkx graph
+    :param G2: The new networkx graph
+    :param Title: THe title contating which centrality
+    :return: Plotted Graph
+    """
 
     fig = plt.figure(figsize=(40,40))
     fig.suptitle(Title, fontsize=20, fontweight='bold')
@@ -313,6 +370,13 @@ def plot_graph2(G1,G2, Title="Default Title"):
     plt.show()
 
 def plot_graph_summary(G1,Gs, Titles=[]):
+    """
+
+    :param G1: The Old Graph
+    :param Gs: The list of all graphs
+    :param Titles: The title of graphs
+    :return: The plotted graphs
+    """
 
     fig = plt.figure(figsize=(50,50))
     fig.suptitle("SUMMARY", fontsize=15, fontweight='bold')

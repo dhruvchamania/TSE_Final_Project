@@ -15,9 +15,17 @@ import psutil
 
 
 def edge_editing(k,l,n,I,cond,path):
-    '''
+    """
 
-    '''
+    :param k: The  value of k anonimity
+    :param l: The value of l diversity
+    :param n: The combination of privacy measure ranges from 1 to 3
+    :param I: The type of centralitu
+    :param cond: Whether you want to use average path length test
+    :param path: Path of the data
+    :return: It returns the old graph, the new graph, the Time Consumed, the memory taken and APL error
+    """
+
 
     mem_before = helpers.get_process_memory()
     G = nx.read_gml(path)
@@ -30,7 +38,7 @@ def edge_editing(k,l,n,I,cond,path):
         G.add_node(node, label = (node[0],node[0]), degree = G.degree[node], id = i)
         i += 1
         labels.append(G.node[node]['label'])
-        print("LOLOLOL",labels)
+        #print("LOLOLOL",labels)
     #Debugging
     # print(2)
     start_time = time.time()

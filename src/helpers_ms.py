@@ -11,6 +11,11 @@ import psutil
 
 mem = []
 def calculate_apl(G):
+    """
+
+    :param G: The networkx graph
+    :return: Calculated apl
+    """
     add = 0
     lol = 0
     max_order = 2
@@ -30,7 +35,12 @@ def calculate_apl(G):
     return add/lol
 
 def centralitity(G,i):
+    """
 
+    :param G: The networkx graph
+    :param i: Which centrality
+    :return: the dictory with vertices
+    """
     degc = {}
 
     if i == 1:
@@ -53,6 +63,10 @@ def centralitity(G,i):
 
 
 def plot_graph(G):
+    """
+    :param G: The networkx graph to plot
+    :return: The plotted graph
+    """
     plt.figure()
     pos_nodes = nx.spring_layout(G)
     nx.draw(G, pos_nodes, with_labels=True)
@@ -95,6 +109,16 @@ def profile(func):
         return result
     return wrapper
 def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
+    """
+
+    :param G: Networkx Graph
+    :param k: The value of k degree anonimity
+    :param l: The value of l diversity
+    :param i: The value of centrality
+    :param c_var: value of c in recursive cl diversity
+    :param alpha: value of alpha anonimity
+    :return: Networkx Graph
+    """
 
     #print("Using all for privacy measures")
     k_val = []
@@ -139,7 +163,16 @@ def generate_tds(G,k,l,i,c_var = 3, alpha = 0.25):
         count = count + 1
     return G
 
-def generate_tds_onlyk(G,k,i):        #Not Tested
+def generate_tds_onlyk(G,k,i):
+    """
+
+    :param G: Networkx Graph
+    :param k: The value of k degree anonimity
+    :param i: The centrality
+    :return: Networkx Graph
+    """
+
+    #Not Tested
     #print("Using only k privacy measures")
     degc = {}
     #Debugging
@@ -158,7 +191,16 @@ def generate_tds_onlyk(G,k,i):        #Not Tested
         count = count + 1
     return G
 
-def generate_tds_kl(G,k,l,i):         #Not Tested
+def generate_tds_kl(G,k,l,i):
+    """
+
+    :param G: Networkx Graph
+    :param k: The value of k degree anonimity
+    :param l: The value of l diversity
+    :param i: The value of centrality
+    :return: Networkx Graph
+    """
+    #Not Tested
     #print("Using k,l privacy measures")
     k_val = []
     k_val.append(k)
@@ -199,6 +241,13 @@ def centrality_top_20(G):
     return degc[:20]
 
 def centrality_top_20_compare(G_old,G_new):
+    """
+
+    :param G_old: The old graph
+    :param G_new: The new graph
+    :return: The count of the top 20 same values
+    """
+
     old,new = [],[]
     I = 0
     for node in G_old.nodes:
@@ -214,7 +263,7 @@ def centrality_top_20_compare(G_old,G_new):
     for i in centrality_top_20(G_old):
         old.append(G_old.node[i[0]]['id'])
     for i in centrality_top_20(G_new):
-        print(i)
+        #print(i)
         new.append(G_new.node[i[0]]['id'])
         # new.append(i[0])
     #Debugging
@@ -224,6 +273,12 @@ def centrality_top_20_compare(G_old,G_new):
     return len(res)
 
 def centrality_values(G):
+    """
+
+    :param G: Networkx Graph
+    :return: Plotted Graph
+    """
+
     original_centrality_val = []
     noise_centrality_val = []
     res = 0
@@ -253,6 +308,13 @@ def centrality_values(G):
     plt.show()
 
 def plot_graph2(G1,G2, Title="Default Title"):
+    """
+
+    :param G1: The old networkx graph
+    :param G2: The new networkx graph
+    :param Title: THe title contating which centrality
+    :return: Plotted Graph
+    """
 
     fig = plt.figure(figsize=(40,40))
     fig.suptitle(Title, fontsize=20, fontweight='bold')
@@ -269,7 +331,7 @@ def plot_graph2(G1,G2, Title="Default Title"):
 
     node_attrs = nx.get_node_attributes(G1, 'label')
     custom_node_attrs = {}
-    print(len(node_attrs))
+    #print(len(node_attrs))
     for node, attr in node_attrs.items():
         custom_node_attrs[node] = "{label: " + attr[0] +","+attr[1]+ "}"
 
@@ -291,7 +353,7 @@ def plot_graph2(G1,G2, Title="Default Title"):
     node_attrs = nx.get_node_attributes(G2, 'label')
     custom_node_attrs = {}
     for node, attr in node_attrs.items():
-        print(attr)
+        #print(attr)
         custom_node_attrs[node] = "{label: " + attr[0] + ","+attr[1]+"}"
 
     nx.draw_networkx_labels(G2, pos_attrs, labels=custom_node_attrs, ax=ax2)
@@ -299,6 +361,13 @@ def plot_graph2(G1,G2, Title="Default Title"):
     plt.show()
 
 def plot_graph_summary(G1,Gs, Titles=[]):
+    """
+
+    :param G1: The Old Graph
+    :param Gs: The list of all graphs
+    :param Titles: The title of graphs
+    :return: The plotted graphs
+    """
 
     fig = plt.figure(figsize=(40,40))
     fig.suptitle("SUMMARY", fontsize=15, fontweight='bold')
