@@ -3,9 +3,9 @@ This repository is the codebase for an anonymzation tool that we have created. A
 
 ## Codebase structure
 
-* [data](data): The 4 primary datasets used for testing. All the data for this project is in gml format. Any changes you need to make to this repository should contain these changes.
-  * [misc](data/misc) Other datasets for which the code base works
-* [docs](docs): Required documentation for the codebase. Important files here are the Complete_Summary.csv that consists of all the data and plots and Final Report.
+* [data](data): The 4 primary datasets used for testing. All the data for this project is in gml format. Any additional data that you add must be stored here.
+  * [misc](data/misc) Other datasetss
+* [docs](docs): Required documentation for the codebase. Important files here are the <strong>Complete_Summary.csv</strong> that consists of all the data and plots and <strong>Final Report</strong>.
 * [src](src): The 4 primary datasets used for testing 
 * [test](test) Test cases and their outputs
   * [algorithm_testing](test/algorithm_testing): Folder to run all the tests from. It consists of some default that we made use of for testing that a user can run (and change). It also consists user_test.py file which when executed a user can try out their own graph
@@ -36,10 +36,6 @@ cd TSE_Final_Project\test\algorithm_testing
 ```
 
 3. Run the already present test cases:  
-test1-test4 edge editing for karate, netscience2, netscience and internet respectively.  
-test5-test8 edge editing for karate, netscience2, netscience and internet respectively. 
-test 4 & test 8 takes a lot of time BE VARY of that.  
-test with ms in them runs multiple labels test cases.
 
 ```
 python test6.py
@@ -49,5 +45,7 @@ python edge_ms.py
 4. Run test cases where you want to choose you which data or if you want to make a graph on your own and run for it. Here are also available choices 
 ```
 python user_test.py
-```
+```  
+
+<strong>Additional Detail is available in our wiki page.</strong>
 
